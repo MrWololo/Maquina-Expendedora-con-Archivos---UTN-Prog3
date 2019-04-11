@@ -1,16 +1,12 @@
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Scanner;
-
-import java.io.EOFException;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Main {
 
@@ -86,8 +82,9 @@ public class Main {
             FileOutputStream f = new FileOutputStream("myProducts.txt", true);
             ObjectOutputStream o = new ObjectOutputStream(f);
             for (int i = 0; i < productos.size(); i++) {
+                //System.out.println(productos.get(i).getProduct());
                 o.writeObject(productos.get(i));
-                o.flush();
+                //o.flush();
             }
             o.close();
             f.close();
@@ -99,32 +96,34 @@ public class Main {
     }
 
     public static void fromFile() {
-
+        System.out.println("\n-1");
         ArrayList<Producto> objectsList = new ArrayList<Producto>();
 
         Producto obj = null;
         boolean stop = false;
-
+        System.out.println("\n-2");
         try {
 
             FileInputStream fi = new FileInputStream(("myProducts.txt"));
             ObjectInputStream oi = new ObjectInputStream(fi);
-
+            System.out.println("\n-3");
             try {
                 obj = (Producto) oi.readObject();
                 objectsList.add(obj);
+                System.out.println("\n-4");
                 while (stop == false) {
                     if ((obj) == null) {
+                        System.out.println("\n-5");
                         stop = true;
                     }
-
+                    System.out.println("\n-6");
                     obj = (Producto) oi.readObject();
-
+                    System.out.println("\n-7");
                     objectsList.add(obj);
 
                 }
             } catch (IOException ex) {
-                System.out.println("\n");
+                System.out.println("\nIOException\n");
             }
 
             for (int i = 0; i < objectsList.size(); i++) {
@@ -181,28 +180,65 @@ public class Main {
                 System.out.println("ID: " + (i + 1));
                 System.out.print(obj.getProduct());
             }
+            int s = 0;
+            char sino = 's';
+            while (sino == 's') {
+                System.out.print("Ingrese la ID del producto al que quiere editar: ");
+                int id = scan.nextInt();
+                s = id;
+                obj = objectsList.get((id - 1));
+                System.out.println("Editar: 1. Nombre\n\t2. Precio\n\t3. Stock\n");
+                int opcion = scan.nextInt();
+                switch (opcion) {
 
-            System.out.print("Ingrese la ID del producto al que quiere editar: ");
-            int s = scan.nextInt();
-            obj = objectsList.get((s - 1));
-            System.out.println("Editar: 1. Nombre\n\t2. Precio\n\t3. Stock\n");
-            int opcion = scan.nextInt();
-            switch (opcion) {
-            case 1:
-                System.out.print("Ingrese el nuevo nombre: ");
-                String name = scan.next();
-                // obj.getNombreProducto;
-                break;
-            case 2:
-                obj = objectsList.get((s - 1));
-                obj.getProductNombre();
-                break;
-            case 3:
-                objectsList.get((s - 1));
-                break;
+                case 1:
+                    System.out.print("Ingrese el nuevo nombre: ");
+                    String name = scan.next();
+                    obj.setProductNombre(name);
+                    break;
+                case 2:
+                    System.out.print("Ingrese el nuevo precio: ");
+                    float precio = scan.nextInt();
+                    obj.setProductPrecio(precio);
+                    break;
+                case 3:
+                    System.out.print("Ingrese el nuevo stock: ");
+                    int stock = scan.nextInt();
+                    obj.setProductStock(stock);
+                    break;
+
+                }
+                System.out.print("Desea hacer otra edicion? (S/N): ");
+                sino = scan.next().charAt(0);
+            }
+
+            for (int i = 0; i < objectsList.size(); i++) {
+
+                obj = objectsList.get(i);
+                productos.add(obj);
+
+            }
+
+            
+            try {
+                FileOutputStream f = new FileOutputStream("myProducts.txt", false);
+                ObjectOutputStream o = new ObjectOutputStream(f);
+                for (int i = 0; i < productos.size(); i++) {
+                    //System.out.println(productos.get(i).getProduct());
+                    o.writeObject(productos.get(i));
+                    //o.flush();
+                }
+                o.close();
+                f.close();
+            } catch (FileNotFoundException e) {
+                System.out.println("File not found");
+            } catch (IOException e) {
+                System.out.println("Error initializing stream");
             }
 
             oi.close();
+
+            //System.out.println(productos.get(s).getProduct());
 
             pressAnyKeyToContinue();
 

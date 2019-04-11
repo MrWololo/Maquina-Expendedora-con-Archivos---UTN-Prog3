@@ -17,6 +17,20 @@ class Producto implements Serializable {
 
     }
 
+    public void setProductNombre(String name) {
+        this.nombre = name;
+    }
+
+    public void setProductPrecio(float price) {
+        this.precio = price;
+    }
+
+    public void setProductStock(int stock) {
+        this.stock = stock;
+    }
+
+    // ------------------------------------------------
+
     public int getProductStock() {
         return stock;
     }
@@ -30,6 +44,7 @@ class Producto implements Serializable {
     }
 
     public String getProduct() {
+        
         StringBuffer buffer = new StringBuffer();
         buffer.append("Nombre: ");
         buffer.append(nombre);
