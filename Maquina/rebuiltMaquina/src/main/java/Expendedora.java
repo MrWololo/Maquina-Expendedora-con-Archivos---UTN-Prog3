@@ -10,11 +10,13 @@ public class Expendedora implements Serializable {
 
     // --------------------------------------------
 
-    public Expendedora(float totalFile) {
-        totalMaquina = totalFile;
+    public Expendedora() {
+        
     }
 
-    public float getSaldoCliente() {
+    
+
+	public float getSaldoCliente() {
         return saldoCliente;
     }
 
@@ -29,16 +31,18 @@ public class Expendedora implements Serializable {
     }
 
     public void agregarTotalMaquina(float agregadoTM) {
-        totalMaquina = totalMaquina + agregadoTM;
+        this.totalMaquina = totalMaquina + agregadoTM;
     }
 
     public void restarTotalMaquina(float restadoTM) {
-        totalMaquina = totalMaquina - restadoTM;
+        this.totalMaquina = totalMaquina - restadoTM;
     }
 
     public float getTotalMaquina() {
         return totalMaquina;
     }
+
+	
 
     //--------------------------------------------
 
